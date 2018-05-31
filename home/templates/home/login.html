@@ -1,0 +1,69 @@
+{% extends 'home/base.html' %}
+{% block content %}
+{% load staticfiles %}
+
+<html>
+    <script>
+        $(document).ready(function() {
+            console.log("Ready to login page");
+
+            $("#signup").hide();
+        });
+
+    function btn_signup(){
+        $("#signup").show();
+        $("#login").hide();
+    }
+    function  btn_login(){
+
+    }
+    function  btn_leg(){
+
+    }
+    function btn_back(){
+        $("#login").show();
+        $("#signup").hide();
+    }
+
+
+    </script>
+
+{#    -------------------html--------------------#}
+    <body>
+        <div id="login" class="align-middle" style="margin-left: 50px; margin-top:50px;">
+            <h1> Login</h1>
+
+            <span class="input-group-text" >ID  </span>
+            <input id="login_id" type="text" class="form-control"><br>
+
+            <span class="input-group-text" >PassWord  </span>
+            <input name="test" id="login_pw"type="password" class="form-control"><br>
+
+
+            <button onclick ="btn_login()" id="btn_login" type="button" class="btn btn-success">Login</button>
+            <button onclick ="btn_signup()" id="btn_signup" type="button" class="btn btn-info">Sign Up</button>
+        </div>
+
+        <div id="signup" style="margin-left: 50px; margin-top:50px; ">
+            <h1> Sign Up</h1>
+
+            <span class="input-group-text"  >ID  </span>
+            <input id="sign_id" type="text" class="form-control"><br>
+
+            <span class="input-group-text" > PassWord  </span>
+            <input id="sign_pw" type="password" class="form-control"><br>
+
+            <span class="input-group-text" > PassWord check  </span>
+            <input id="sign_pw2" type="password" class="form-control"><br>
+
+            <span class="input-group-text" > Name  </span>
+            <input  id="sign_name" type="text" class="form-control"><br>
+
+            <button onclick="btn_reg()" id="btn_reg"type="button" class="btn btn-info">Regist</button>
+
+            <button onclick="btn_back()" type="button" class="btn btn-warning">Back</button>
+
+        </div>
+    {% endblock %}
+    </body>
+</html>
