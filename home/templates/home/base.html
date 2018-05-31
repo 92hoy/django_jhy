@@ -16,7 +16,7 @@
             <img src="{% static 'img/1125.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
             HOY-BLOG</a>
 
-        <ul class="nav justify-content-center">
+        <ul class="nav justify-content-center" style="margin-left: 180px;">
             <li class="nav-item">
                 <a class="nav-link active" href="#">Menu1</a>
             </li>
@@ -29,6 +29,15 @@
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled Menu</a>
             </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_active %}
+                <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-heart"></span> {{user.username}}</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-user"></span> Login</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
         </ul>
     </nav>
     <div class="col-md-8">

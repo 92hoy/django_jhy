@@ -1,0 +1,39 @@
+{% extends 'home/base.html' %}
+{% block content %}
+
+    <!-- 로그인 되어있는 경우 -->
+    {% if user.is_active %}
+        <h2 style="align:left; "> Welcome, {{user.username}} </h2>
+        <a href="{% url 'logout' %}">로그아웃</a>
+
+        <!-- 로그인 되어있지 않은 경우 -->
+    {% else %}
+        {% if form.errors %}
+            <!-- 에러발생시 -->
+            <p>ID나 비밀번호가 일치하지 않습니다.</p>
+        {% endif %}
+        <!-- 로그인 폼 -->
+        <form method="post" action="{% url 'login' %}" style="margin-top: 50px; margin-left: 30px;">
+            {% csrf_token %}
+
+
+            <input type="hidden" name="next" value="" />
+
+            <div class="form-group" >
+                <span class="input-group-text" for="{{ form.username.id_for_label }}">ID  </span>
+                <input class="form-control" id="{{ form.username.id_for_label }}" maxlength="15" name="{{ form.username.html_name }}" type="text" />
+            </div>
+            <div class="form-group">
+                <span class="input-group-text" for="{{ form.password.id_for_label }}">PassWord  </span>
+                <input class="form-control" id="{{ form.password.id_for_label }}" maxlength="120" name="{{ form.password.html_name }}" type="password" />
+            </div>
+            <button id="btn_login" type="submit" class="btn btn-success">Login</button>
+            <a href="{% url 'login' %}">
+                <button type="button" class="btn btn-danger">취소</button>
+            </a>
+            <input type="hidden" name="next" value="">
+        </form>
+
+
+    {% endif %}
+{% endblock %}
