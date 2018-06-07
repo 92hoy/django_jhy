@@ -1,69 +1,165 @@
-{% extends 'home/base.html' %}
-{% block content %}
-{% load staticfiles %}
+<%include file="base.html"/>
 
 <html>
-    <script>
-        $(document).ready(function() {
-            console.log("Ready to login page");
+<script>
+    $(document).ready(function() {
+        console.log("Ready to login page");
 
-            $("#signup").hide();
+        $("#signup").hide();
+
+        $("input[name=test]").keydown(function (key) {
+
+            if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+
+                btn_login();
+
+            }
         });
+        $('#signup').keydown(function (q) {
+          if (q.keyCode == 13) {
+            $('#btn_reg').click();
+          }
+        });
+    });
+
+
+
 
     function btn_signup(){
         $("#signup").show();
         $("#login").hide();
     }
-    function  btn_login(){
+
+    function btn_login(){
+
+        var login_id = $('#login_id').val();
+        var login_pw = $('#login_pw').val();
+        lock=0;
+
+        if (login_id == '') {
+            swal("Error","아이디 값을 입력하세요", "warning");
+            lock = 1;
+        }
+        else if (login_pw == '') {
+            swal("Error","비밀번호 값을 입력하세요", "warning");
+            lock = 1;
+        }
+
+        if (lock==0) {
+            $.ajax({
+                type: "POST",
+                url: "/home/login",
+                data: {
+                    login_id: login_id,
+                    login_pw: login_pw
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        $(location).attr('href','/home');
+                    }
+                    else if (data.reeturn != 'success') {
+                        $(location).attr('href','/home/login');
+                    }
+                },
+            });
+        }
+    }
+
+    function btn_leg(){
+        var sign_id = $('#sign_id').val();
+        var sign_pw = $('#sign_pw').val();
+        var sign_pw2 = $('#sign_pw2').val();
+        var sign_name = $('#sign_name').val();
+        var lock = 0;
+
+        if(sign_id == ''){
+        swal("입력 오류", "아이디 값을 입력하세요", "info");
+        lock = 1;
+        }
+        else if(sign_pw == ''){
+            swal("입력 오류", "비밀번호 값을 입력하세요", "info");
+            lock = 1;
+        }
+        else if(sign_name == ''){
+            swal("입력 오류", "이름 값을 입력하세요", "info");
+            lock = 1;
+        }
+        else if(sign_pw != sign_pw2){
+            swal("입력 오류", "패스워드가 일치하지 않습니다", "info");
+            lock = 1;
+        }
+
+        if(lock ==0){
+            $.ajax({
+                type: "POST",
+                url: "/home/regist",
+                data: {
+                    sign_id: sign_id,
+                    sign_pw: sign_pw,
+                    sign_name: sign_name,
+                },
+                success: function (data) {
+                    if (data.return == 'success') {
+                        swal("Success","회원가입 완료","success")
+                        $(location).attr('href','/home');
+                        //location.reload()
+                        alert(333);
+                    }
+                    else if (data.reeturn != 'success') {
+                        swal("Fail","회원가입 실패","warning")
+                        $("#sign_id").val("");
+                        $("#sign_pw").val("");
+                        $("#sign_pw2").val("");
+                        $("#sign_name").val("");
+                    }
+                },
+            });
+        }
 
     }
-    function  btn_leg(){
 
-    }
     function btn_back(){
         $("#login").show();
         $("#signup").hide();
     }
 
 
-    </script>
+</script>
 
-{#    -------------------html--------------------#}
-    <body>
-        <div id="login" class="align-middle" style="margin-left: 50px; margin-top:50px;">
-            <h1> Login</h1>
+<body>
+<div id="login" class="align-middle" style="margin-left: 50px; margin-top:50px;">
+    <h1> Login</h1>
 
-            <span class="input-group-text" >ID  </span>
-            <input id="login_id" type="text" class="form-control"><br>
+    <span class="input-group-text" >ID  </span>
+    <input id="login_id" type="text" class="form-control"><br>
 
-            <span class="input-group-text" >PassWord  </span>
-            <input name="test" id="login_pw"type="password" class="form-control"><br>
+    <span class="input-group-text" >PassWord  </span>
+    <input name="test" id="login_pw"type="password" class="form-control"><br>
 
 
-            <button onclick ="btn_login()" id="btn_login" type="button" class="btn btn-success">Login</button>
-            <button onclick ="btn_signup()" id="btn_signup" type="button" class="btn btn-info">Sign Up</button>
-        </div>
+    <button onclick ="btn_login()" id="btn_login" type="button" class="btn btn-success">Login</button>
+    <button onclick ="btn_signup()" id="btn_signup" type="button" class="btn btn-info">Sign Up</button>
+</div>
 
-        <div id="signup" style="margin-left: 50px; margin-top:50px; ">
-            <h1> Sign Up</h1>
+<div id="signup" style="margin-left: 50px; margin-top:50px; ">
+    <h1> Sign Up</h1>
 
-            <span class="input-group-text"  >ID  </span>
-            <input id="sign_id" type="text" class="form-control"><br>
+    <span class="input-group-text"  >ID  </span>
+    <input id="sign_id" type="text" class="form-control"><br>
 
-            <span class="input-group-text" > PassWord  </span>
-            <input id="sign_pw" type="password" class="form-control"><br>
+    <span class="input-group-text" > PassWord  </span>
+    <input id="sign_pw" type="password" class="form-control"><br>
 
-            <span class="input-group-text" > PassWord check  </span>
-            <input id="sign_pw2" type="password" class="form-control"><br>
+    <span class="input-group-text" > PassWord check  </span>
+    <input id="sign_pw2" type="password" class="form-control"><br>
 
-            <span class="input-group-text" > Name  </span>
-            <input  id="sign_name" type="text" class="form-control"><br>
+    <span class="input-group-text" > Name  </span>
+    <input  id="sign_name" type="text" class="form-control"><br>
 
-            <button onclick="btn_reg()" id="btn_reg"type="button" class="btn btn-info">Regist</button>
+    <button onclick="btn_leg()" id="btn_reg" type="button" class="btn btn-info">Regist</button>
 
-            <button onclick="btn_back()" type="button" class="btn btn-warning">Back</button>
+    <button onclick="btn_back()" type="button" class="btn btn-warning">Back</button>
 
-        </div>
-    {% endblock %}
-    </body>
+</div>
+</body>
 </html>

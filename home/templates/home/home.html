@@ -1,11 +1,20 @@
-{% extends 'home/base.html' %}
-{% block content %}
-{% load staticfiles %}
-<html>
+<%include file="base.html"/>
+
+    <html>
     <body>
-        <div>
-            <h1><a href="/">여기가 메인 페이지</a></h1>
-        </div>
-{% endblock %}
-    </body>
+    <div>
+
+        % if 'user_id' in request.session:
+                <h1>본문</h1>
+
+                <img src="/static/img/1125.png" width="200" height="220" class="d-inline-block align-top" alt="">
+            % else:
+                <h1><a href="/home/login">로그인</a></h1>
+            % endif
+
+
+    </div>
+
+
+</body>
 </html>
