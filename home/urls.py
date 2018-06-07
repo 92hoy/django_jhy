@@ -1,9 +1,6 @@
 from django.conf.urls import url
 from . import views
-<<<<<<< HEAD
 from django.contrib.auth import views as auth_views
-=======
->>>>>>> 813fb6ef8497c398e8d8664d487f2959a0e2720c
 
 urlpatterns = [
     url(r'^$', views.home, name='home'),
