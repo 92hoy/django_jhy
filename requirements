@@ -1,0 +1,6 @@
+Django==2.0.5
+djangomako==1.1.1
+Mako==1.0.7
+MarkupSafe==1.0
+PyMySQL==0.8.1
+pytz==2018.4
