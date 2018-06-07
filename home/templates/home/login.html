@@ -4,15 +4,10 @@
 <script>
     $(document).ready(function() {
         console.log("Ready to login page");
-
         $("#signup").hide();
-
         $("input[name=test]").keydown(function (key) {
-
             if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
-
                 btn_login();
-
             }
         });
         $('#signup').keydown(function (q) {
@@ -21,21 +16,14 @@
           }
         });
     });
-
-
-
-
     function btn_signup(){
         $("#signup").show();
         $("#login").hide();
     }
-
     function btn_login(){
-
         var login_id = $('#login_id').val();
         var login_pw = $('#login_pw').val();
         lock=0;
-
         if (login_id == '') {
             swal("Error","아이디 값을 입력하세요", "warning");
             lock = 1;
@@ -44,7 +32,6 @@
             swal("Error","비밀번호 값을 입력하세요", "warning");
             lock = 1;
         }
-
         if (lock==0) {
             $.ajax({
                 type: "POST",
@@ -64,14 +51,12 @@
             });
         }
     }
-
     function btn_leg(){
         var sign_id = $('#sign_id').val();
         var sign_pw = $('#sign_pw').val();
         var sign_pw2 = $('#sign_pw2').val();
         var sign_name = $('#sign_name').val();
         var lock = 0;
-
         if(sign_id == ''){
         swal("입력 오류", "아이디 값을 입력하세요", "info");
         lock = 1;
@@ -88,7 +73,6 @@
             swal("입력 오류", "패스워드가 일치하지 않습니다", "info");
             lock = 1;
         }
-
         if(lock ==0){
             $.ajax({
                 type: "POST",
@@ -115,15 +99,11 @@
                 },
             });
         }
-
     }
-
     function btn_back(){
         $("#login").show();
         $("#signup").hide();
     }
-
-
 </script>
 
 <body>
