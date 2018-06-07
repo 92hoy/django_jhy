@@ -3,6 +3,10 @@ h1 a {
     font-family: 'Lobster';
 }
 a {
+<<<<<<< HEAD
     color : rebeccapurple;
+=======
+    color : blueviolet;
+>>>>>>> 813fb6ef8497c398e8d8664d487f2959a0e2720c
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }

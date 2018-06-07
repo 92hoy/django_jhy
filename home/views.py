@@ -1,10 +1,14 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from django.http import JsonResponse
 from home.models import User
 from django.views.decorators.csrf import csrf_exempt
 
 
 # model user
+=======
+from django.views.generic.base import TemplateView
+>>>>>>> 813fb6ef8497c398e8d8664d487f2959a0e2720c
 
 def home(request):
 
@@ -12,6 +16,7 @@ def home(request):
 
 @csrf_exempt
 def login(request):
+<<<<<<< HEAD
 
     print("ss");
 
@@ -68,3 +73,9 @@ def logout(request):
 
 def file(request):
     return render(request,'home/file.html')
+=======
+    return render(request, 'home/login.html',{})
+
+class IndexView(TemplateView): # TemplateView를 상속 받는다.
+    template_name = 'home/login.html'
+>>>>>>> 813fb6ef8497c398e8d8664d487f2959a0e2720c

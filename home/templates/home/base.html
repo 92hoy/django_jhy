@@ -1,4 +1,5 @@
 <html>
+<<<<<<< HEAD
 <head>
     <title>Django Girls blog</title>
 
@@ -52,6 +53,52 @@
 
 <div class="col-md-8">
 </div>
+=======
+    <head>
+        <title>Django Girls blog</title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+    </head>
+    <body>
+    <nav class="navbar navbar-light" style="background-color: #E7F9DF;">
+        <a class="navbar-brand" href="/home/" id="haeder_brand">
+            <img src="{% static 'img/1125.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+            HOY-BLOG</a>
+
+        <ul class="nav justify-content-center" style="margin-left: 180px;">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Menu1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Menu2</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Menu3</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled Menu</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_active %}
+                <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-heart"></span> {{user.username}}</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+                <li><a href="{%url 'login' %}"> <span class="glyphicon glyphicon-user"></span> Login</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="col-md-8">
+        {% block content %}
+        {% endblock %}
+    </div>
+>>>>>>> 813fb6ef8497c398e8d8664d487f2959a0e2720c
 
 </body>
 </html>
