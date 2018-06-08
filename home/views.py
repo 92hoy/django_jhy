@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from home.models import User
+from home.models import Post
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils import timezone
 
 # model user
 
@@ -12,9 +13,7 @@ def home(request):
 
 @csrf_exempt
 def login(request):
-
-    print("ss");
-
+    print("login start")
     if request.is_ajax():
 
         login_id = request.POST.get('login_id')
@@ -54,7 +53,7 @@ def regist(request):
             print ("sign id --------->",sign_id)
             print ("regist fail")
             return JsonResponse({'return':'fail'})
-        print ("reg--------->",reg)
+        #print ("reg--------->",reg)
 
 
         return JsonResponse({'return':'success'})
@@ -68,3 +67,36 @@ def logout(request):
 
 def file(request):
     return render(request,'home/file.html')
+
+@csrf_exempt
+def post_list(request):
+    print('post_list start --------------------> ')
+    return render(request, 'home/post_list.html')
+
+@csrf_exempt
+def post_list_data(request):
+
+    print("regist start")
+
+    if request.is_ajax():
+
+        content_title = request.POST.get('content_title')
+        Content = request.POST.get('Content')
+        user_id = request.POST.get('user_id')
+        print(user_id)
+
+        try:
+             post_list = Post(user_id=user_id,title=content_title,content=Content)
+             post_list.save()
+
+             request.session['user_id'] = user_id
+            #reg = User.objects.create(user_id=sign_id,password=sign_pw,name=sign_name)
+            #reg, created = User.objects.get_or_create(user_id=sign_id,password=sign_pw,name=sign_name)
+        except User.DoesNotExist:
+            print ("content_title--------->",content_title)
+            print ("regist fail")
+
+            return JsonResponse({'return':'fail'})
+
+
+        return JsonResponse({'return':'success'})
