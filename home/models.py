@@ -29,3 +29,15 @@ class Post(models.Model):
 
     class Meta:
       db_table = "Post"
+
+# class Post_Table(Table):
+#     id= Column(field='id')
+#     title= Column(field='title')
+#     content= Column(field='content')
+#     user_id= Column(field='user_id')
+#
+#     class Meta:
+#             model = Post
+#             ajax = True
+
+

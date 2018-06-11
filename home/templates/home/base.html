@@ -15,10 +15,14 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- data tables CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+
 
 </head>
 <body>
-<nav class="navbar navbar-light" style="background-color: #E7F9DF;">
+<nav class="navbar navbar-light" style="background-color: #DCDCDC;">
     <a class="navbar-brand" href="/home/" id="haeder_brand">
         <img src="/static/img/1125.png" width="30" height="30" class="d-inline-block align-top" alt="">
         HOY-BLOG</a>
@@ -34,7 +38,7 @@
             <a class="nav-link" href="/home/file">File</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="post_list">게시판</a>
+            <a class="nav-link disabled" href="post_insert">게시판</a>
         </li>
         <ul class="nav navbar-nav navbar-right"style="margin-right:20px; ">
             % if 'user_id' in request.session:
@@ -54,4 +58,5 @@
 </div>
 
 </body>
+
 </html>

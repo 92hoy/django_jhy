@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from home.models import User
 from home.models import Post
+import json
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import serializers
 from django.utils import timezone
 
 # model user
@@ -69,9 +71,13 @@ def file(request):
     return render(request,'home/file.html')
 
 @csrf_exempt
-def post_list(request):
-    print('post_list start --------------------> ')
-    return render(request, 'home/post_list.html')
+def post_insert(request):
+    #print('post_list start --------------------> ')
+    test_all = Post.objects.all().values('id','title','content','user_id')
+    test_all = json.dumps({"data": list(test_all)})
+    data = {'test_data': test_all,}
+
+    return render(request, 'home/post_insert.html',data)
 
 @csrf_exempt
 def post_list_data(request):
@@ -86,8 +92,8 @@ def post_list_data(request):
         print(user_id)
 
         try:
-             post_list = Post(user_id=user_id,title=content_title,content=Content)
-             post_list.save()
+             post_insert = Post(user_id=user_id,title=content_title,content=Content)
+             post_insert.save()
 
              request.session['user_id'] = user_id
             #reg = User.objects.create(user_id=sign_id,password=sign_pw,name=sign_name)
@@ -100,3 +106,12 @@ def post_list_data(request):
 
 
         return JsonResponse({'return':'success'})
+
+@csrf_exempt
+def post_list(request):
+    test_all = Post.objects.all().values('id','title','content','user_id')
+    test_all = json.dumps({"data": list(test_all)})
+    data = {'test_data': test_all,}
+    return render(request, 'home/post_list.html', data)
+
+

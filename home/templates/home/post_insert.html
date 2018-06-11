@@ -1,5 +1,4 @@
 <%include file="base.html"/>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +6,20 @@
 </head>
 <script>
     $(document).ready(function() {
+        $("#post_insert").hide();
+        var json= ${ "test_data" | safe }
+        var data=json['data']
+        var json2 =JSON.stringify(data)
+        alert(json2)
         console.log("Ready to Posting page");
+        $('#post_table').DataTable({
+            "ajax":json2
+        })
     });
+
+    function btn_posting(){
+        $("#post_insert").show();
+    }
     function btn_save(){
         var content_title = $('#content_title').val();
         var Content = $('#Content').val();
@@ -36,8 +47,7 @@
                 },
                 success: function (data) {
                     if (data.return == 'success') {
-                        $(location).attr('href','/home');
-                        alert("Posting Success")
+                        $("#post_insert").hide();
                     }
                     else if (data.return != 'success') {
                         swal("posting-fail","왜 에러가났지 ??","warning")
@@ -49,8 +59,15 @@
 </script>
 <body>
 % if 'user_id' in request.session:
-<h1>게시판</h1>
-<div style="margin: auto; width: 900px;">
+<!-- 게시판 Header-->
+<div style="height: 120px; width: 800px;margin: auto">
+    <h1>게시판</h1>
+    <button onclick="btn_posting()" type="button" class="btn btn-outline-secondary" style="float: right">게시글 작성</button>
+</div>
+<!-- 게시판 글 목록-->
+
+<!-- 게시판 글 작성-->
+<div style="margin: auto; width: 900px;" id="post_insert">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="insert_title">제목</span>
@@ -66,6 +83,20 @@
     </div>
     <button onclick="btn_save()" name ="content_save"type="button" class="btn btn-success" style="float:right; margin-top: 10px;">Save</button>
 </div>
+<!-- Table --->
+
+<table class="table" id="post_table">
+    <thead>
+    <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+        <th scope="col">User</th>
+        <th scope="col">c-date</th>
+        <th scope="col">m-date</th>
+    </tr>
+    </thead>
+</table>
 
 
 <!-- 세션 없을떄 (비 로그인 상태)-->
