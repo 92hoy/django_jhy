@@ -5,21 +5,77 @@
     <title>Title</title>
 </head>
 <script>
+
     $(document).ready(function() {
-        $("#post_insert").hide();
-        var json= ${ "test_data" | safe }
-        var data=json['data']
-        var json2 =JSON.stringify(data)
-        alert(json2)
-        console.log("Ready to Posting page");
-        $('#post_table').DataTable({
-            "ajax":json2
-        })
+        $('#post_insert').hide();
+        setDataTable();
     });
+
+    function setDataTable() {
+        var $table = $('#post_table');
+        $table.dataTable({
+            dom: '<"toolbar">rt<"bottom"ip><"clear">',
+            bProcessing: true,
+            serverSide: false,
+            searching: true,
+            pageLength: 10,
+            ajax: {
+                url: "/home/post_list",
+                type: "POST",
+                dataType: "json",
+                data: buildSearchData,
+                dataSrc: function (json) {
+                    return json.data;
+                }
+            },
+            columns: [
+                {data: "id"},
+                {data: "title"},
+                {data: "content"},
+                {data: "user_id"},
+            ],
+            columnDefs: [
+                {targets: 0, visible: true},
+                {targets: 1, visible: true},
+                {targets: 2, visible: true},
+                {targets: 3, visible: true},
+            ],
+            oTableTools: {
+                sSwfPath: $table.data('swf-path'),
+                aButtons: []
+            },
+            paginate: true,
+            language: {
+                lengthMenu: "_MENU_",
+                zeroRecords: "조회된 데이터가 없습니다",
+                info: "전체페이지 _PAGE_ / _PAGES_ ( _MAX_ )",
+                infoEmpty: "조회된 데이터가 없습니다",
+                infoFiltered: "(filtered from _MAX_ total records)",
+                sEmptyTable: "조회된 데이터가 없습니다",
+                paginate: {
+                    first: "처음",
+                    previous: "이전",
+                    next: "다음",
+                    last: "끝"
+                }
+            },
+        });
+    }
+
+    function buildSearchData() {
+        var obj = {
+            csrfmiddlewaretoken: '${ csrf_token }',
+        }
+        return obj
+    }
+
+    <!---------------------------->
 
     function btn_posting(){
         $("#post_insert").show();
+        $("#post_table").hide();
     }
+
     function btn_save(){
         var content_title = $('#content_title').val();
         var Content = $('#Content').val();
@@ -48,6 +104,7 @@
                 success: function (data) {
                     if (data.return == 'success') {
                         $("#post_insert").hide();
+                        location.reload();
                     }
                     else if (data.return != 'success') {
                         swal("posting-fail","왜 에러가났지 ??","warning")
@@ -92,8 +149,6 @@
         <th scope="col">Title</th>
         <th scope="col">Content</th>
         <th scope="col">User</th>
-        <th scope="col">c-date</th>
-        <th scope="col">m-date</th>
     </tr>
     </thead>
 </table>

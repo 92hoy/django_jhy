@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import JsonResponse,HttpResponse
 from home.models import User
 from home.models import Post
-import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers
 from django.utils import timezone
@@ -72,12 +71,9 @@ def file(request):
 
 @csrf_exempt
 def post_insert(request):
-    #print('post_list start --------------------> ')
-    test_all = Post.objects.all().values('id','title','content','user_id')
-    test_all = json.dumps({"data": list(test_all)})
-    data = {'test_data': test_all,}
+    print('post_list start --------------------> ')
 
-    return render(request, 'home/post_insert.html',data)
+    return render(request, 'home/post_insert.html')
 
 @csrf_exempt
 def post_list_data(request):
@@ -109,9 +105,42 @@ def post_list_data(request):
 
 @csrf_exempt
 def post_list(request):
-    test_all = Post.objects.all().values('id','title','content','user_id')
-    test_all = json.dumps({"data": list(test_all)})
-    data = {'test_data': test_all,}
-    return render(request, 'home/post_list.html', data)
+    if request.is_ajax():
 
+        id= request.POST.get('id')
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        user_id = request.POST.get('user_id')
+
+        print("----------------> DEBUG [s]")
+        print("id = ", id)
+        print("title = ", title)
+        print("content = ", content)
+        print("user_id = ", user_id)
+        print("----------------> DEBUG [e]")
+
+        dataAll = Post.objects.all()
+        print("dataAll = ", dataAll)
+
+        hello_list = []
+        last_list = {}
+
+        for item in dataAll:
+            hello_dict = {}
+            print(item.id)
+            print(item.title)
+            print(item.content)
+            print(item.user_id)
+            hello_dict['id'] = str(item.id)
+            hello_dict['title'] = item.title
+            hello_dict['content'] = item.content
+            hello_dict['user_id'] = str(item.user_id)
+            hello_list.append(hello_dict)
+
+        return JsonResponse({'data': hello_list})
+
+
+def post_ud(request):
+
+    return render(request,'home/post_ud.html')
 
