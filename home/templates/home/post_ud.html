@@ -7,6 +7,38 @@
     <title>Title</title>
 </head>
 <body>
+% if 'user_id' in request.session:
+<!-- 게시판 Header-->
+<div style="height: 120px; width: 800px;margin: auto">
+    <h1>게시판</h1>
+    <button onclick="btn_posting()" type="button" class="btn btn-outline-secondary" style="float: right">게시글 작성</button>
+</div>
+<!-- 게시판 글 목록-->
+
+<!-- 게시판 글 작성-->
+<div style="margin: auto; width: 900px;" id="post_insert">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="insert_title">제목</span>
+        </div>
+        <input type="text" id="content_title" class="form-control" placeholder="Title" aria-label="Title" aria-describedby="basic-addon1">
+    </div>
+
+    <div class="input-group" style="height: 300px;">
+        <div class="input-group-prepend">
+            <span class="input-group-text">내용</span>
+        </div>
+        <textarea class="form-control" aria-label="With textarea" id="Content"></textarea>
+    </div>
+    <button onclick="btn_save()" name ="content_save"type="button" class="btn btn-success" style="float:right; margin-top: 10px;">Save</button>
+</div>
+
+
+<!-- 세션 없을떄 (비 로그인 상태)-->
+% else:
+<h1>로그인 하고 들어와라</h1>
+<h1><a href="/home/login">로그인</a></h1>
+% endif
 
 </body>
 </html>

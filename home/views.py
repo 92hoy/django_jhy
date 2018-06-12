@@ -5,6 +5,7 @@ from home.models import Post
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import serializers
 from django.utils import timezone
+from django.views.generic.base import TemplateView
 
 # model user
 
@@ -141,6 +142,9 @@ def post_list(request):
 
 
 def post_ud(request):
-
+    # obj, created = Post.objects.update_or_create(
+    # title='title', content='content', defaults=updated_values)
     return render(request,'home/post_ud.html')
 
+class IndexView(TemplateView): # TemplateView를 상속 받는다.
+    template_name = 'home/login.html'
